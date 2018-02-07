@@ -78,7 +78,11 @@ public class Main {
         System.exit(0);
     }
 
-    /** Reads the user command and executes it, until the user issues the exit command.  */
+    /** Reads the user command and executes it, until the user issues the exit command.
+     *
+     * I referenced PR #133 to use similar logic in handling the exceptions being thrown throughout the methods.
+     *
+     */
     private void runCommandLoopUntilExitCommand() {
         Command command;
         do {
