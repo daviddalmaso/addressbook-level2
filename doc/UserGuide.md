@@ -43,6 +43,8 @@ Format: `add NAME [p]p/PHONE_NUMBER [p]e/EMAIL [p]a/ADDRESS [t/TAG]...`
 > Put a `p` before the phone / email / address prefixes to mark it as `private`. `private` details can only
 > be seen using the `viewall` command.
 > 
+> The `ADDRESS` field should be formatted as `a/BLOCK, STREET, UNIT, POSTAL_CODE`. If any field is not applicable, please input it as `N/A` opposed to leaving it blank.
+>
 > Persons can have any number of tags (including 0)
 
 Examples: 
