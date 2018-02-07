@@ -9,11 +9,15 @@ import seedu.addressbook.data.exception.IllegalValueException;
 public class Address {
 
     public static final String EXAMPLE = "123, some street";
-    public static final String MESSAGE_ADDRESS_CONSTRAINTS = "Person addresses can be in any format";
-    public static final String ADDRESS_VALIDATION_REGEX = ".+";
+    public static final String MESSAGE_ADDRESS_CONSTRAINTS = "Person addresses must be in the format a/BLOCK, STREET, UNIT, POSTAL_CODE";
+    public static final String ADDRESS_VALIDATION_REGEX = ".+, .+, .+, .+";
 
     public final String value;
     private boolean isPrivate;
+    public final Block block;
+    public final Street street;
+    public final Unit unit;
+    public final PostalCode postalCode;
 
     /**
      * Validates given address.
@@ -26,7 +30,12 @@ public class Address {
         if (!isValidAddress(trimmedAddress)) {
             throw new IllegalValueException(MESSAGE_ADDRESS_CONSTRAINTS);
         }
-        this.value = trimmedAddress;
+        String[] splitAddress = trimmedAddress.split(", ", 4);
+        this.block = new Block(splitAddress[0]);
+        this.street = new Street(splitAddress[1]);
+        this.unit = new Unit(splitAddress[2]);
+        this.postalCode = new PostalCode(splitAddress[3]);
+        this.value = this.block + ", " + this.street + ", " + this.unit + ", " + this.postalCode;
     }
 
     /**
@@ -55,5 +64,57 @@ public class Address {
 
     public boolean isPrivate() {
         return isPrivate;
+    }
+}
+
+class Block {
+    public String blockName;
+
+    public Block(String blockName) {
+        this.blockName = blockName;
+    }
+
+    @Override
+    public String toString() {
+        return blockName;
+    }
+}
+
+class Street {
+    public String streetName;
+
+    public Street(String streetName) {
+        this.streetName = streetName;
+    }
+
+    @Override
+    public String toString() {
+        return streetName;
+    }
+}
+
+class Unit {
+    public String unitNumber;
+
+    public Unit(String unitNumber) {
+        this.unitNumber = unitNumber;
+    }
+
+    @Override
+    public String toString() {
+        return unitNumber;
+    }
+}
+
+class PostalCode {
+    public String postalCode;
+
+    public PostalCode(String postalCode) {
+        this.postalCode = postalCode;
+    }
+
+    @Override
+    public String toString() {
+        return postalCode;
     }
 }
