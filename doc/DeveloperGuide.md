@@ -37,6 +37,8 @@
 ## Design
 <img src="images/mainClassDiagram.png"/>
 
+EDIT: The above image is correct except for the addition of a Filter class. The TextUi class has an instance of the Filter class. The Filter object removes the responsibility of filtering text (comments or empty commands) from the TextUi class.
+
 ## Testing
 
 ### I/O tests

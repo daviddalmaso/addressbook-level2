@@ -32,15 +32,12 @@ public class TextUi {
     /** Format of indexed list item */
     private static final String MESSAGE_INDEXED_LIST_ITEM = "\t%1$d. %2$s";
 
-
     /** Offset required to convert between 1-indexing and 0-indexing.  */
     public static final int DISPLAYED_INDEX_OFFSET = 1;
 
-    /** Format of a comment input line. Comment lines are silently consumed when reading user input. */
-    private static final String COMMENT_LINE_FORMAT_REGEX = "#.*";
-
     private final Scanner in;
     private final PrintStream out;
+    private final Filter filter;
 
     public TextUi() {
         this(System.in, System.out);
@@ -49,27 +46,7 @@ public class TextUi {
     public TextUi(InputStream in, PrintStream out) {
         this.in = new Scanner(in);
         this.out = out;
-    }
-
-    /**
-     * Returns true if the user input line should be ignored.
-     * Input should be ignored if it is parsed as a comment, is only whitespace, or is empty.
-     *
-     * @param rawInputLine full raw user input line.
-     * @return true if the entire user input line should be ignored.
-     */
-    private boolean shouldIgnore(String rawInputLine) {
-        return rawInputLine.trim().isEmpty() || isCommentLine(rawInputLine);
-    }
-
-    /**
-     * Returns true if the user input line is a comment line.
-     *
-     * @param rawInputLine full raw user input line.
-     * @return true if input line is a comment.
-     */
-    private boolean isCommentLine(String rawInputLine) {
-        return rawInputLine.trim().matches(COMMENT_LINE_FORMAT_REGEX);
+        this.filter = new Filter();
     }
 
     /**
@@ -83,7 +60,7 @@ public class TextUi {
         String fullInputLine = in.nextLine();
 
         // silently consume all ignored lines
-        while (shouldIgnore(fullInputLine)) {
+        while (filter.shouldIgnore(fullInputLine)) {
             fullInputLine = in.nextLine();
         }
 
