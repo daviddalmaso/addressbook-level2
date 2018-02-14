@@ -36,6 +36,7 @@
 
 ## Design
 <img src="images/mainClassDiagram.png"/>
+EDIT: The above image is correct except for the addition of a Formatter class. The TextUi class has an instance of the Formatter class. The formatter object removes the responsibility of formatting text from the TextUi class.
 
 ## Testing
 
