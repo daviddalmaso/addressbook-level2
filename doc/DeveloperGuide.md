@@ -37,6 +37,8 @@
 ## Design
 <img src="images/mainClassDiagram.png"/>
 
+EDIT: In addition to the class diagram above, an additional Contact class was added. The classes Address, Email, and Phone are all subclasses of the newly created Contact class. The Contact class extracts similarities between the Address, Email, and Phone classes. 
+
 ## Testing
 
 ### I/O tests
