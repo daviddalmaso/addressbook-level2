@@ -21,17 +21,19 @@ public class FindCommand extends Command {
             + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
             + "Example: " + COMMAND_WORD + " alice bob charlie";
 
-    private final Set<String> keywords;
+    private final Set<String> keywords = new HashSet<>();
 
     public FindCommand(Set<String> keywords) {
-        this.keywords = keywords;
+        for (String keyword : keywords) {
+            this.keywords.add(keyword.toLowerCase());
+        }
     }
 
     /**
      * Returns a copy of keywords in this command.
      */
     public Set<String> getKeywords() {
-        return new HashSet<>(keywords);
+        return this.keywords;
     }
 
     @Override
@@ -49,8 +51,10 @@ public class FindCommand extends Command {
     private List<ReadOnlyPerson> getPersonsWithNameContainingAnyKeyword(Set<String> keywords) {
         final List<ReadOnlyPerson> matchedPersons = new ArrayList<>();
         for (ReadOnlyPerson person : addressBook.getAllPersons()) {
-            final Set<String> wordsInName = new HashSet<>(person.getName().getWordsInName());
-            if (!Collections.disjoint(wordsInName, keywords)) {
+            List<String> wordsInName = person.getName().getWordsInName();
+            wordsInName.replaceAll(String::toLowerCase);
+            final Set<String> editedWordsInName = new HashSet<>(wordsInName);
+            if (!Collections.disjoint(editedWordsInName, keywords)) {
                 matchedPersons.add(person);
             }
         }
